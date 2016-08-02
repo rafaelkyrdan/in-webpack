@@ -1,4 +1,4 @@
-const {resolve} = require('path');
+const {resolve} = require('path')
 module.exports = env => {
   return {
     entry: './js/app.js',
@@ -17,4 +17,4 @@ module.exports = env => {
       ],
     },
   }
-};
+}

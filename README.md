@@ -9,4 +9,8 @@ run the command `npm run validate-webpack:dev` or `npm run validate-webpack:prod
 3. Tree-shaking with webpack 2 and Babel 6 allows us to exclude unused exports from bundles.
 For instance, in the file `helpers.js` we have a function `addClass` which we export to `app.js`
 but we don't use it there. So webpack drop this function from bundle.
-4. ...
+4. Webpack allows us to add a hash to file url. First add a `chunkhash` property
+in the `webpack.config.js` to filename. Then add the `html-webpack-plugin` which will
+simplify creation `index.html` for bundle. Everytime when we change the source files
+webpack will create a new hash.
+5. ...

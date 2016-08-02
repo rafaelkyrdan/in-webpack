@@ -1,11 +1,17 @@
+const webpack = require('webpack')
 const {resolve} = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const isProd = process.env.NODE_ENV === 'production'
+const isTest = process.env.NODE_ENV === 'test'
 
 module.exports = env => {
   return {
-    entry: './js/app.js',
+    entry: {
+      app: './js/app.js',
+      vendor:['lodash'],
+    },
     output: {
-      filename: 'bundle.[chunkhash].js',
+      filename: 'bundle.[name].[chunkhash].js',
       path: resolve(__dirname, 'dist'),
       pathinfo: !env.prod,
     },
@@ -19,9 +25,12 @@ module.exports = env => {
       ],
     },
     plugins:[
+      new webpack.optimize.CommonsChunkPlugin({
+        name:'vendor',
+      }),
       new HtmlWebpackPlugin({
         template:'./index.html'
-      })
+      }),
     ]
   }
 }

@@ -1,7 +1,7 @@
 # in-webpack
 Exploring webpack in practice.
 
-## Path.
+## Path(Each step in the separate commit).
 1. We initiate the project with `es6-todo` app.
 2. We use `webpack-validator` to validate our webpack config. For instance,
 if you make a mistake in the file, add a semicolon at the end of the file and
@@ -13,4 +13,8 @@ but we don't use it there. So webpack drop this function from bundle.
 in the `webpack.config.js` to filename. Then add the `html-webpack-plugin` which will
 simplify creation `index.html` for bundle. Everytime when we change the source files
 webpack will create a new hash.
-5. ...
+5. In order to optimize cashing we can separate our bundle on 2 bundles:
+one for vendor libraries and second one for our source code. So browsers can cash
+vendor's bundle for longer time. We use `Webpack CommonsChunkPlugin` to group vendor's files.
+In the `webpack.config.js` we edit `entry` and `output` section.
+6. ...

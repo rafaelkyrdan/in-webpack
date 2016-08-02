@@ -4,7 +4,26 @@
   "description": "Exploring webpack in practice.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start",
+    "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
+    "watch:test": "npm test -- --auto-watch --no-single-run",
+    "validate": "npm-run-all --parallel validate-webpack:* lint test --serial check-coverage",
+    "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
+    "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
+    "clean-dist": "rimraf dist",
+    "copy-files": "cpy src/index.html src/favicon.ico dist",
+    "clean-and-copy": "npm run clean-dist && npm run copy-files",
+    "prestart": "npm run clean-and-copy",
+    "start": "webpack-dev-server --env.dev --content-base dist",
+    "prebuild": "npm run clean-and-copy",
+    "prebuild:prod": "npm run clean-and-copy",
+    "build": "webpack --env.dev",
+    "build:prod": "webpack --env.prod -p",
+    "lint": "eslint .",
+    "setup": "npm install && npm run validate",
+    "setup:fem": "git checkout FEM/07.1-deploy-surge && npm install && npm run validate && rimraf dist coverage && git checkout FEM/00-original-project",
+    "setup:workshop": "git checkout workshop/07-coverage && npm install && npm run validate && rimraf dist coverage && git checkout workshop/00-original-project",
+    "setup:egghead": "git checkout prelesson/polyfill-promises && npm install && mkdir dist && npm run validate"
   },
   "repository": {
     "type": "git",
@@ -26,7 +45,7 @@
     "babel-eslint": "6.0.4",
     "babel-loader": "6.2.4",
     "babel-plugin-__coverage__": "11.0.0",
-    "babel-preset-es2015-webpack": "6.4.1",
+    "babel-preset-es2015-webpack": "^6.4.1",
     "babel-preset-stage-2": "6.5.0",
     "chai": "3.5.0",
     "cpy-cli": "1.0.1",
@@ -52,32 +71,10 @@
     "webpack": "2.1.0-beta.13",
     "webpack-dev-server": "2.0.0-beta",
     "webpack-validator": "2.1.0"
-  },  
+  },
   "config": {
     "ghooks": {
       "pre-commit": "opt --in pre-commit --exec \"npm run validate\""
     }
-  },
-  "scripts": {
-    "test": "karma start",
-    "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
-    "watch:test": "npm test -- --auto-watch --no-single-run",
-    "validate": "npm-run-all --parallel validate-webpack:* lint test --serial check-coverage",
-    "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
-    "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
-    "clean-dist": "rimraf dist",
-    "copy-files": "cpy src/index.html src/favicon.ico dist",
-    "clean-and-copy": "npm run clean-dist && npm run copy-files",
-    "prestart": "npm run clean-and-copy",
-    "start": "webpack-dev-server --env.dev --content-base dist",
-    "prebuild": "npm run clean-and-copy",
-    "prebuild:prod": "npm run clean-and-copy",
-    "build": "webpack --env.dev",
-    "build:prod": "webpack --env.prod -p",
-    "lint": "eslint .",
-    "setup": "npm install && npm run validate",
-    "setup:fem": "git checkout FEM/07.1-deploy-surge && npm install && npm run validate && rimraf dist coverage && git checkout FEM/00-original-project",
-    "setup:workshop": "git checkout workshop/07-coverage && npm install && npm run validate && rimraf dist coverage && git checkout workshop/00-original-project",
-    "setup:egghead": "git checkout prelesson/polyfill-promises && npm install && mkdir dist && npm run validate"
   }
 }

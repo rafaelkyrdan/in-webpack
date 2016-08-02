@@ -1,4 +1,4 @@
-export {qs, qsa, removeClass, $on, $delegate, $parent}
+export {qs, qsa, removeClass, addClass, $on, $delegate, $parent}
 
 // Get element(s) by CSS selector:
 function qs(selector, scope) {
@@ -18,6 +18,18 @@ function removeClass(el, className) {
     el.classList.remove(className)
   } else {
     el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ')
+  }
+}
+
+// function for example with tree shaking feature from webpack2
+// we export this function to app.js but we don't use it there
+// so webpack2 drop it from the bundle
+
+function addClass(el, className) {
+  if (el.classList) {
+    el.classList.add(className)
+  } else {
+    el.className += ' ' + className
   }
 }
 

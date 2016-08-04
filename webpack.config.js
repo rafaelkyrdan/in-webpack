@@ -27,42 +27,46 @@ module.exports = env => {
       loaders: [
         {test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/},
         {test: /\.css$/, loader: 'style!css'},
+
+        // {
+        //   test: resolve('./src/js/app'), loader: 'imports?_=lodash'
+        // }
       ],
     },
-    plugins:removeEmpty([
-      ifProd(new webpack.optimize.DedupePlugin()),
-      ifProd(new webpack.LoaderOptionsPlugin({
-        minimize: true,
-        debug:false
-      })),
-      ifProd(new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV:'"production"'
-        }
-      })),
-      ifProd(new webpack.optimize.UglifyJsPlugin({
-        compress:{
-          screw_ie8: true,// eslint-disable-line
-          warnings:false,
-        }
-      })),
-      env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
-        name:'common',
-        filename:'bundle.common.js'
-      })
-    ])
-    // plugins:[
+    // plugins:removeEmpty([
+    //   ifProd(new webpack.optimize.DedupePlugin()),
+    //   ifProd(new webpack.LoaderOptionsPlugin({
+    //     minimize: true,
+    //     debug:false
+    //   })),
+    //   ifProd(new webpack.DefinePlugin({
+    //     'process.env': {
+    //       NODE_ENV:'"production"'
+    //     }
+    //   })),
+    //   ifProd(new webpack.optimize.UglifyJsPlugin({
+    //     compress:{
+    //       screw_ie8: true,// eslint-disable-line
+    //       warnings:false,
+    //     }
+    //   })),
     //   env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
     //     name:'common',
     //     filename:'bundle.common.js'
-    //   }),
-    //   env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
-    //     name:'vendor',
-    //     chunk:['app', 'vendor']
-    //   }),
-    //   new HtmlWebpackPlugin({
-    //     template:'./index.html'
-    //   }),
-    // ].filter(p => !!p
+    //   })
+    // ])
+    plugins:[
+      env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
+        name:'common',
+        filename:'bundle.common.js'
+      }),
+      // env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
+      //   name:'vendor',
+      //   chunk:['app', 'vendor']
+      // }),
+      new HtmlWebpackPlugin({
+        template:'./index.html'
+      }),
+    ].filter(p => !!p)
   }
 }

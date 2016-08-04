@@ -18,7 +18,6 @@
     "prebuild": "npm run clean-and-copy",
     "prebuild:prod": "npm run clean-and-copy",
     "build": "webpack --env.dev",
-
     "build:prod": "webpack --env.prod",
     "lint": "eslint .",
     "setup": "npm install && npm run validate",
@@ -58,6 +57,7 @@
     "eslint-plugin-import": "1.8.1",
     "ghooks": "1.2.4",
     "html-webpack-plugin": "^2.22.0",
+    "imports-loader": "^0.6.5",
     "istanbul": "0.4.3",
     "karma": "0.13.22",
     "karma-chai": "0.1.0",

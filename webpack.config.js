@@ -1,8 +1,10 @@
 const webpack = require('webpack')
 const {resolve} = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const isProd = process.env.NODE_ENV === 'production'
-const isTest = process.env.NODE_ENV === 'test'
+
+// don't need because we are using `env.test` and `evn.prod`
+// const isProd = process.env.NODE_ENV === 'production'
+// const isTest = process.env.NODE_ENV === 'test'
 
 module.exports = env => {
   return {
@@ -25,12 +27,16 @@ module.exports = env => {
       ],
     },
     plugins:[
-      new webpack.optimize.CommonsChunkPlugin({
+      env.test ? null : new webpack.optimize.CommonsChunkPlugin({
+        name:'common',
+        filename:'bundle.common.js'
+      }),
+      env.test ? null : new webpack.optimize.CommonsChunkPlugin({
         name:'vendor',
       }),
       new HtmlWebpackPlugin({
         template:'./index.html'
       }),
-    ]
+    ].filter(p => !!p)
   }
 }

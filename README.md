@@ -17,4 +17,5 @@ webpack will create a new hash.
 one for vendor libraries and second one for our source code. So browsers can cash
 vendor's bundle for longer time. We use `Webpack CommonsChunkPlugin` to group vendor's files.
 In the `webpack.config.js` we edit `entry` and `output` section.
-6. ...
+6. The same plugin `Webpack CommonsChunkPlugin` we can use to create a bundle with
+common files for different apps.

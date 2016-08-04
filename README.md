@@ -23,4 +23,5 @@ common files for different apps.
 or equal or similar files and deduplicate them in the output. `UglifyJsPlugin` -
 minimize all JavaScript output of chunks. With `LoaderOptionsPlugin` we can put loaders
 into minimize mode.
-8. With `imports-loader` module for `webpack` import variables into scope.
+8. With `imports-loader` module for `webpack` we can import variables into scope.
+9. With `exports-loader` module for `webpack` we can force module to export variable.

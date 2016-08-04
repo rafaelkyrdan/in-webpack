@@ -31,6 +31,10 @@ module.exports = env => {
         // {
         //   test: resolve('./src/js/app'), loader: 'imports?_=lodash'
         // }
+
+        // {
+        //   test: resolve('./src/js/app'), loader: 'exports?someObject=innerObject'
+        // }
       ],
     },
     // plugins:removeEmpty([

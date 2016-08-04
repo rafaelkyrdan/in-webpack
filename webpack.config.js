@@ -7,6 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const isTest = process.env.NODE_ENV === 'test'
 
 module.exports = env => {
+  const addPlugin = (add, plugin) => add ? plugin : undefined
+  const ifProd = plugin => addPlugin(env.prod, plugin)
+  const removeEmpty = array => array.filter(i => !!i)
   return {
     entry: {
       app: './js/app.js',
@@ -26,17 +29,40 @@ module.exports = env => {
         {test: /\.css$/, loader: 'style!css'},
       ],
     },
-    plugins:[
-      env.test ? null : new webpack.optimize.CommonsChunkPlugin({
+    plugins:removeEmpty([
+      ifProd(new webpack.optimize.DedupePlugin()),
+      ifProd(new webpack.LoaderOptionsPlugin({
+        minimize: true,
+        debug:false
+      })),
+      ifProd(new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV:'"production"'
+        }
+      })),
+      ifProd(new webpack.optimize.UglifyJsPlugin({
+        compress:{
+          screw_ie8: true,// eslint-disable-line
+          warnings:false,
+        }
+      })),
+      env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
         name:'common',
         filename:'bundle.common.js'
-      }),
-      env.test ? null : new webpack.optimize.CommonsChunkPlugin({
-        name:'vendor',
-      }),
-      new HtmlWebpackPlugin({
-        template:'./index.html'
-      }),
-    ].filter(p => !!p)
+      })
+    ])
+    // plugins:[
+    //   env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
+    //     name:'common',
+    //     filename:'bundle.common.js'
+    //   }),
+    //   env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
+    //     name:'vendor',
+    //     chunk:['app', 'vendor']
+    //   }),
+    //   new HtmlWebpackPlugin({
+    //     template:'./index.html'
+    //   }),
+    // ].filter(p => !!p
   }
 }

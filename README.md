@@ -19,3 +19,7 @@ vendor's bundle for longer time. We use `Webpack CommonsChunkPlugin` to group ve
 In the `webpack.config.js` we edit `entry` and `output` section.
 6. The same plugin `Webpack CommonsChunkPlugin` we can use to create a bundle with
 common files for different apps.
+7. With `Webpack Productio plugins` we size and perfomance. `DedupePlugin` searchs for
+or equal or similar files and deduplicate them in the output. `UglifyJsPlugin` -
+minimize all JavaScript output of chunks. With `LoaderOptionsPlugin` we can put loaders
+into minimize mode.

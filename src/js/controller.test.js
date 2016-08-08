@@ -10,3 +10,15 @@ describe('controller', () => {
     expect(controller).to.exist
   })
 })
+
+describe('test', () => {
+  it('it works', () => {
+    expect(true).to.be.true
+  })
+  it('it works again', () => {
+    expect(false).to.be.false
+  })
+  it('really', () => {
+    expect('hi').to.equal('hi')
+  })
+})
